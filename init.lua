@@ -670,7 +670,24 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {
+          cmd = { 'gopls' },
+          filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+          settings = {
+            gopls = {
+              completeUnimported = true,
+              usePlaceholders = true,
+              analyses = {
+                unusedparams = true,
+              },
+            },
+          },
+        },
+
+        emmet_language_server = {
+          filetypes = { 'gohtmltmpl' },
+        },
+
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -732,6 +749,11 @@ require('lazy').setup({
         },
       }
     end,
+  },
+
+  {
+
+    'fatih/vim-go',
   },
 
   { -- Autoformat
@@ -1028,6 +1050,29 @@ require('lazy').setup({
     },
   },
 })
+
+-- Stuff for template syntax
+vim.filetype.add {
+  pattern = {
+    ['*.tmpl'] = 'html',
+  },
+}
+
+-- Stuff for template syntax
+vim.filetype.add {
+  extension = {
+    gotmpl = 'gotmpl',
+  },
+  pattern = {
+    ['*.tmpl'] = 'helm',
+  },
+}
+
+-- My own stuff for using vim-go (which does not seem to co-operate well with the lazy package manager)
+vim.cmd [[
+    autocmd FileType go nmap <leader>b  <Plug>(go-build)
+    autocmd FileType go nmap <leader>r  <Plug>(go-run)
+]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
