@@ -684,6 +684,8 @@ require('lazy').setup({
           },
         },
 
+        templ = {},
+
         emmet_language_server = {
           filetypes = { 'gohtmltmpl' },
         },
